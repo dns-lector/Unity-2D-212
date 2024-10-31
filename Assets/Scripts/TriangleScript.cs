@@ -1,22 +1,61 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class TriangleScript : MonoBehaviour
 {
+    private Rigidbody2D rb2d;   // РїРѕСЃРёР»Р°РЅРЅСЏ РЅР° РєРѕРјРїРѕРЅРµРЅС‚
+
     void Start()
     {
-        Debug.Log("Hello, World!");
+        Debug.Log("TriangleScript Starts");
+        rb2d = GetComponent<Rigidbody2D>();   // С€СѓРєР°С”РјРѕ СЃРµСЂРµРґ РєРѕРјРїРѕРЅРµРЅС‚С–РІ
     }
     
     void Update()
     {
-        
+        // Р¤РѕСЂРјСѓС”РјРѕ РІРµРєС‚РѕСЂ РЅР°РїСЂСЏРјСѓ СЃРёР»Рё РІ Р·Р°Р»РµР¶РЅРѕСЃС‚С– РІС–Рґ РЅР°С‚РёСЃРЅРµРЅРёС… РєРЅРѕРїРѕРє
+        Vector2 forceDirection = Vector2.zero;
+        // РЅРµРїРµСЂРµСЂРІРЅРµ СѓРїСЂР°РІР»С–РЅРЅСЏ (Р·Р°С‚РёСЃРєР°РЅРЅСЏ РєРЅРѕРїРѕРє)
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            forceDirection += Vector2.up;
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            forceDirection += Vector2.left;
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            forceDirection += Vector2.right;
+        }
+        if (forceDirection != Vector2.zero)
+        {
+            rb2d.AddForce(forceDirection * 3);
+        }
+        /*
+        // С–РјРїСѓР»СЊСЃРЅРµ СѓРїСЂР°РІР»С–РЅРЅСЏ (Р±Р°РіР°С‚РѕСЂР°Р·РѕРІРµ РЅР°С‚РёСЃРєР°РЅРЅСЏ)
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            forceDirection += Vector2.up;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            forceDirection += Vector2.left;
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            forceDirection += Vector2.right;
+        } 
+        if (forceDirection != Vector2.zero)
+        {
+            rb2d.AddForce(forceDirection * 100);
+        }*/        
     }
 }
-/* Д.З. Встановити Unity
- * Створити проєкт 2D Core
- * Зробити композицію сцени 
- *  - підібрати фоновий рисунок
- *  - підібрати об'єкти переднього плану
- *  - налаштувати координати для правильного перекриття об'єктів
- *  Опублікувати проєкт на репозиторії, додати скріншоти
+
+/* Р”.Р—. Р¤С–Р·РёС‡РЅРµ СѓРїСЂР°РІР»С–РЅРЅСЏ
+ * - Р·Р°Р±РµР·РїРµС‡РёС‚Рё "РєРѕСЂРґРѕРЅРё" С–РіСЂРѕРІРѕРіРѕ РїРѕР»СЏ (РґРѕРґР°С‚Рё СЃС‚С–РЅРё, СЃС‚РµР»СЋ)
+ * - РґРѕРґР°С‚Рё РІСЃС– РЅР°РїСЂСЏРјРё РїСЂРёРєР»Р°РґР°РЅРЅСЏ СЃРёР»Рё РґРѕ РѕР±'С”РєС‚Р°
+ * - СЂРµР°Р»С–Р·СѓРІР°С‚Рё "СЃРєРёРґР°РЅРЅСЏ" СЃРёР»Рё РєРЅРѕРїРєРѕСЋ "ESC" Р·Р° СЏРєРѕС— 
+ *    РѕР±РЅСѓР»СЋСЋС‚СЊСЃСЏ rb2d.linearVelocity С‚Р° rb2d.angularVelocity
+ * - РїСЂРёРєР»Р°СЃС‚Рё РІС–РґРµРѕР·Р°РїРёСЃ СЂРѕР±РѕС‚Рё РїСЂРѕС”РєС‚Сѓ
  */
