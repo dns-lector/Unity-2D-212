@@ -1,17 +1,23 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class ArrowScript : MonoBehaviour
 {
     [SerializeField]
     private Transform rotAnchor;
 
+    [SerializeField]
+    private Image forceIndicator;
+
     void Start()
     {
-        
+        GameState.birdForceFactor = forceIndicator.fillAmount;
     }
 
     void Update()
     {
+        if(GameState.isBirdFly) return;
+
         float dy = Input.GetAxis("Vertical");   // "сигнал" з усіх
         // пристроїв, що відповідають за управління по вертикалі
         float currentAngle = this.transform.eulerAngles.z;
@@ -23,13 +29,21 @@ public class ArrowScript : MonoBehaviour
         {
             this.transform.RotateAround(rotAnchor.position, Vector3.forward, dy);
         }
+
+        float dx = Input.GetAxis("Horizontal") * Time.deltaTime;
+        float f = forceIndicator.fillAmount;
+        if (0 < f + dx && f + dx <= 1)
+        {
+            GameState.birdForceFactor = 
+                forceIndicator.fillAmount = f + dx;
+        }
     }
 }
 /* Скрипт управління "Стрілкою"
  * за натиском "Вгору"/"Вниз" (W/S, джойстик) стрілка змінює кут нахилу
  * 
- * Д.З. Створити нову сцену
- * Зробити її аналогічною попередній сцені, тільки розмістити іншого персонажа
- * Змінити стартову позицію
- * Для обох сцен підібрати максимальний та мінімальний кут нахилу Стрілки
+ * Д.З. На новій сцені (з попереднього ДЗ)
+ * реалізувати взаємодію компонентів
+ * - пауза гри
+ * - колізії
  */
