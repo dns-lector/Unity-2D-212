@@ -4,7 +4,7 @@ public class PigScript : MonoBehaviour
 {
     void Start()
     {
-        
+        GameState.pigsCount = GameObject.FindGameObjectsWithTag(this.gameObject.tag).Length;
     }
 
     void Update()
@@ -16,7 +16,17 @@ public class PigScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("PigDestroy"))
         {
-            Debug.Log(collision.gameObject.name);
+            // Рахуємо скільки є об'єктів з таким же тегом, як у даного
+            int pigs = GameObject.FindGameObjectsWithTag(this.gameObject.tag).Length;
+            pigs -= 1;
+            GameState.pigsCount = pigs;
+            if (pigs == 0)
+            {
+                GameState.isLevelFinished = true;
+                GameState.isFinishOk = true;
+                ModalScript.ShowModal("ПЕРЕМОГА", "Рівень пройдено");
+            }
+            GameObject.Destroy(this.gameObject);
         }
     }
 }

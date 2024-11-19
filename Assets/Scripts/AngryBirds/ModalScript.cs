@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ModalScript : MonoBehaviour
 {
@@ -9,8 +10,11 @@ public class ModalScript : MonoBehaviour
     [SerializeField]
     private TMPro.TextMeshProUGUI messageTmp;
 
+    private static ModalScript instance;
+
     void Start()
     {
+        instance = this;
         if (content.activeInHierarchy)
         {
             Time.timeScale = 0.0f;
@@ -35,12 +39,12 @@ public class ModalScript : MonoBehaviour
 
         }
     }
-    public void ShowModal(string title, string message)
+    public static void ShowModal(string title, string message)
     {
-        titleTmp.text = title;
-        messageTmp.text = message;
+        instance.titleTmp.text = title;
+        instance.messageTmp.text = message;
         Time.timeScale = 0.0f;
-        content.SetActive(true);
+        instance.content.SetActive(true);
     }
     private void HideModal()
     {
@@ -57,7 +61,26 @@ public class ModalScript : MonoBehaviour
     }
     public void OnResumeButtonClick()
     {
+        GameState.idleTime = 0.0f;
         HideModal();
+        if (GameState.isLevelFinished)
+        {
+            // Вимагається перезапуск сцени
+            if (GameState.isFinishOk)
+            {
+                // Наступний рівень
+                GameState.level += 1;
+                if(GameState.level >= SceneManager.sceneCountInBuildSettings)
+                {
+                    GameState.level = 0;
+                }
+            }
+            else
+            {
+                // Повтор того ж рівня                
+            }
+            SceneManager.LoadScene(GameState.level);
+        }
     }
 }
 /* Д.З. На другій сцені (з попередніх ДЗ) реалізувати

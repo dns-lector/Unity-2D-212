@@ -37,6 +37,11 @@ public class ArrowScript : MonoBehaviour
             GameState.birdForceFactor = 
                 forceIndicator.fillAmount = f + dx;
         }
+
+        if (dy != 0.0f || dx != 0.0f)
+        {
+            GameState.idleTime = 0.0f;
+        }
     }
 }
 /* Скрипт управління "Стрілкою"
